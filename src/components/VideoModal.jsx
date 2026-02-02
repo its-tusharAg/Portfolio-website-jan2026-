@@ -1,11 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Volume2, VolumeX } from 'lucide-react';
-import { useState } from 'react';
+import { X } from 'lucide-react';
 
 const VideoModal = ({ isOpen, onClose, project }) => {
-    const videoRef = useRef(null);
-    const [isMuted, setIsMuted] = useState(false);
+    const iframeRef = useRef(null);
 
     useEffect(() => {
         const handleEscape = (e) => {
@@ -22,12 +20,6 @@ const VideoModal = ({ isOpen, onClose, project }) => {
             document.body.style.overflow = 'unset';
         };
     }, [isOpen, onClose]);
-
-    useEffect(() => {
-        if (isOpen && videoRef.current) {
-            videoRef.current.play();
-        }
-    }, [isOpen]);
 
     const backdropVariants = {
         hidden: { opacity: 0 },
@@ -61,6 +53,9 @@ const VideoModal = ({ isOpen, onClose, project }) => {
     };
 
     if (!project) return null;
+
+    // Check if it's a YouTube video (has youtubeId) or local video
+    const isYouTube = !!project.youtubeId;
 
     return (
         <AnimatePresence>
@@ -138,43 +133,33 @@ const VideoModal = ({ isOpen, onClose, project }) => {
                             aspectRatio: '16/9',
                             backgroundColor: '#000000',
                         }}>
-                            <video
-                                ref={videoRef}
-                                src={project.videoUrl}
-                                controls
-                                muted={isMuted}
-                                style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    objectFit: 'contain',
-                                }}
-                            />
-
-                            {/* Mute Toggle */}
-                            <button
-                                onClick={() => setIsMuted(!isMuted)}
-                                style={{
-                                    position: 'absolute',
-                                    bottom: '1rem',
-                                    left: '1rem',
-                                    width: '2.5rem',
-                                    height: '2.5rem',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    borderRadius: '50%',
-                                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                                    border: 'none',
-                                    cursor: 'pointer',
-                                    transition: 'background-color 0.3s',
-                                }}
-                            >
-                                {isMuted ? (
-                                    <VolumeX style={{ width: '1.25rem', height: '1.25rem', color: '#ffffff' }} />
-                                ) : (
-                                    <Volume2 style={{ width: '1.25rem', height: '1.25rem', color: '#ffffff' }} />
-                                )}
-                            </button>
+                            {isYouTube ? (
+                                // YouTube Embed - plays directly on site, no redirect
+                                <iframe
+                                    ref={iframeRef}
+                                    src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
+                                    title={project.title}
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        border: 'none',
+                                    }}
+                                />
+                            ) : (
+                                // Local video fallback
+                                <video
+                                    src={project.videoUrl}
+                                    controls
+                                    autoPlay
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: 'contain',
+                                    }}
+                                />
+                            )}
                         </div>
 
                         {/* Project Info */}

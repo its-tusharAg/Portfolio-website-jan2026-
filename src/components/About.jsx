@@ -104,7 +104,7 @@ const About = () => {
                             lineHeight: '1.8',
                             marginBottom: '2rem',
                         }}>
-                            From music videos to brand documentaries, I bring a unique perspective
+                            From short films to brand documentaries, I bring a unique perspective
                             to every project. My approach combines technical precision with creative
                             vision to deliver content that exceeds expectations.
                         </p>

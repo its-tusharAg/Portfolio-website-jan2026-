@@ -1,11 +1,14 @@
-// Project data - Custom content linked
+// Project data - Update youtubeId with your actual YouTube video IDs
+// The youtubeId is the part after "v=" in a YouTube URL
+// Example: https://www.youtube.com/watch?v=dQw4w9WgXcQ → youtubeId: "dQw4w9WgXcQ"
+
 export const projects = [
     {
         id: '1',
         title: 'Brand Story',
         category: 'Commercial',
         thumbnail: '/thumbnails/Brand Story.png',
-        videoUrl: '/videos/Brand Story.mp4',
+        youtubeId: 'YOUR_YOUTUBE_ID_1', // Replace with your YouTube video ID
         description: 'A cinematic brand story that captures the essence of modern luxury.',
     },
     {
@@ -13,7 +16,7 @@ export const projects = [
         title: 'Website Showcasing',
         category: 'Commercial',
         thumbnail: '/thumbnails/Brand Story.png',
-        videoUrl: '/videos/3. Website showcasing.mp4',
+        youtubeId: 'Pb8B1iMzE6Q', // Replace with your YouTube video ID
         description: 'Sleek website reveal with smooth transitions and visual effects.',
     },
     {
@@ -21,7 +24,7 @@ export const projects = [
         title: 'Documentary',
         category: 'Documentary',
         thumbnail: '/thumbnails/Documentary.png',
-        videoUrl: '/videos/Documentary.mp4',
+        youtubeId: 'vGzXEMU8hBE', // Replace with your YouTube video ID
         description: 'An intimate documentary exploring urban culture and creativity.',
     },
     {
@@ -29,7 +32,7 @@ export const projects = [
         title: 'Story Type 1',
         category: 'Social',
         thumbnail: '/thumbnails/Documentary.png',
-        videoUrl: '/videos/4. Story Type 1.mp4',
+        youtubeId: 'DImLD34lXBg', // Replace with your YouTube video ID
         description: 'Engaging story format designed for social media impact.',
     },
     {
@@ -37,7 +40,7 @@ export const projects = [
         title: 'Fashion Reel',
         category: 'Fashion',
         thumbnail: '/thumbnails/Fashion Reel.png',
-        videoUrl: '/videos/Fashion Reel.mp4',
+        youtubeId: 'pD92DCs2cYw', // Replace with your YouTube video ID
         description: 'High-fashion editorial video with artistic direction.',
     },
 ];

@@ -177,7 +177,7 @@ const ProjectGrid = ({ onSelectProject, onHoverVideo, onLeaveVideo }) => {
                     color: 'rgba(255, 255, 255, 0.5)',
                     maxWidth: '40rem',
                 }}>
-                    A curated collection of projects that showcase my passion for visual storytelling
+                    A curated collection of projects that showcase my passion for visual storytelling and video editing
                 </p>
             </motion.div>
 
