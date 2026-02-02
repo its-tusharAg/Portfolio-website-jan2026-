@@ -31,7 +31,7 @@ const CustomCursor = ({ isHoveringVideo, isModalOpen }) => {
 
     return (
         <AnimatePresence>
-            {isVisible && (
+            {isVisible && !isModalOpen && (
                 <>
                     {/* Main cursor dot */}
                     <motion.div
