@@ -1,9 +1,9 @@
-import { useRef, useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { Play } from 'lucide-react';
 import { projects } from '../data/projects';
 
 const ProjectCard = ({ project, index, onSelect, onHoverStart, onHoverEnd }) => {
-    const videoRef = useRef(null);
     const [isHovered, setIsHovered] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageError, setImageError] = useState(false);
@@ -11,18 +11,11 @@ const ProjectCard = ({ project, index, onSelect, onHoverStart, onHoverEnd }) => 
     const handleMouseEnter = () => {
         setIsHovered(true);
         onHoverStart();
-        if (videoRef.current) {
-            videoRef.current.play();
-        }
     };
 
     const handleMouseLeave = () => {
         setIsHovered(false);
         onHoverEnd();
-        if (videoRef.current) {
-            videoRef.current.pause();
-            videoRef.current.currentTime = 0;
-        }
     };
 
     // Bento grid sizing classes
@@ -49,50 +42,102 @@ const ProjectCard = ({ project, index, onSelect, onHoverStart, onHoverEnd }) => 
             onClick={() => onSelect(project)}
         >
             {/* Thumbnail Image */}
-            <div style={{ position: 'relative', width: '100%', height: '100%', minHeight: '250px' }}>
+            <div style={{ position: 'relative', width: '100%', height: '100%', minHeight: '250px', overflow: 'hidden' }}>
                 {/* Fallback gradient background */}
                 <div style={{
                     position: 'absolute',
                     inset: 0,
                     background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%)',
-                    opacity: (!imageLoaded || imageError) && !isHovered ? 1 : 0,
+                    opacity: !imageLoaded || imageError ? 1 : 0,
                     transition: 'opacity 0.5s',
                 }} />
 
-                <img
+                {/* Thumbnail - Always visible with zoom on hover */}
+                <motion.img
                     src={project.thumbnail}
                     alt={project.title}
                     onLoad={() => setImageLoaded(true)}
                     onError={() => setImageError(true)}
+                    animate={{
+                        scale: isHovered ? 1.1 : 1,
+                    }}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
                     style={{
                         position: 'absolute',
                         inset: 0,
                         width: '100%',
                         height: '100%',
                         objectFit: 'cover',
-                        transition: 'opacity 0.5s',
-                        opacity: isHovered ? 0 : (imageLoaded && !imageError ? 1 : 0),
+                        opacity: imageLoaded && !imageError ? 1 : 0,
                     }}
                 />
 
-                {/* Video Preview (on hover) */}
-                <video
-                    ref={videoRef}
-                    src={project.videoUrl}
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
+                {/* Dark overlay on hover */}
+                <motion.div
+                    animate={{
+                        opacity: isHovered ? 0.4 : 0,
+                    }}
+                    transition={{ duration: 0.3 }}
                     style={{
                         position: 'absolute',
                         inset: 0,
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        transition: 'opacity 0.5s',
-                        opacity: isHovered ? 1 : 0,
+                        backgroundColor: '#000',
+                        zIndex: 5,
                     }}
                 />
+
+                {/* Play Button - Shows on hover */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{
+                        opacity: isHovered ? 1 : 0,
+                        scale: isHovered ? 1 : 0.5,
+                    }}
+                    transition={{ duration: 0.3, ease: 'easeOut' }}
+                    style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        zIndex: 15,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <motion.div
+                        animate={{
+                            boxShadow: isHovered
+                                ? ['0 0 20px rgba(168, 85, 247, 0.5)', '0 0 40px rgba(168, 85, 247, 0.8)', '0 0 20px rgba(168, 85, 247, 0.5)']
+                                : '0 0 0px rgba(168, 85, 247, 0)',
+                        }}
+                        transition={{
+                            duration: 1.5,
+                            repeat: Infinity,
+                            ease: 'easeInOut',
+                        }}
+                        style={{
+                            width: '70px',
+                            height: '70px',
+                            borderRadius: '50%',
+                            background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.9) 0%, rgba(139, 92, 246, 0.9) 100%)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backdropFilter: 'blur(10px)',
+                        }}
+                    >
+                        <Play
+                            style={{
+                                width: '28px',
+                                height: '28px',
+                                color: '#fff',
+                                marginLeft: '4px', // Optical center adjustment
+                            }}
+                            fill="#fff"
+                        />
+                    </motion.div>
+                </motion.div>
 
                 {/* Overlay Content */}
                 <div style={{
@@ -103,10 +148,11 @@ const ProjectCard = ({ project, index, onSelect, onHoverStart, onHoverEnd }) => 
                     flexDirection: 'column',
                     justifyContent: 'flex-end',
                     padding: '1.5rem',
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 40%, transparent 100%)',
                 }}>
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: isHovered ? 1 : 0.9, y: isHovered ? 0 : 10 }}
+                        animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.3 }}
                     >
                         <span style={{
@@ -138,6 +184,7 @@ const ProjectCard = ({ project, index, onSelect, onHoverStart, onHoverEnd }) => 
                         inset: 0,
                         borderRadius: '16px',
                         pointerEvents: 'none',
+                        zIndex: 20,
                     }}
                     animate={{
                         boxShadow: isHovered

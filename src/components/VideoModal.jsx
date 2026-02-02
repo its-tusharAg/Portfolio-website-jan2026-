@@ -137,7 +137,7 @@ const VideoModal = ({ isOpen, onClose, project }) => {
                                 // YouTube Embed - plays directly on site, no redirect
                                 <iframe
                                     ref={iframeRef}
-                                    src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
+                                    src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1&mute=1&rel=0&modestbranding=1`}
                                     title={project.title}
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen

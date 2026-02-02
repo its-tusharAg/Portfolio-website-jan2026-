@@ -54,7 +54,7 @@ function App() {
       backgroundColor: '#0a0a0a',
     }}>
       {/* Custom Cursor */}
-      <CustomCursor isHoveringVideo={isHoveringVideo} />
+      <CustomCursor isHoveringVideo={isHoveringVideo} isModalOpen={isModalOpen} />
 
       {/* Grain Overlay */}
       <GrainOverlay />

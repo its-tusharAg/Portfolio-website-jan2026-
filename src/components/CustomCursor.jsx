@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play } from 'lucide-react';
 
-const CustomCursor = ({ isHoveringVideo }) => {
+const CustomCursor = ({ isHoveringVideo, isModalOpen }) => {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [isVisible, setIsVisible] = useState(false);
 
@@ -30,6 +29,11 @@ const CustomCursor = ({ isHoveringVideo }) => {
         return null;
     }
 
+    // Hide cursor when modal is open
+    if (isModalOpen) {
+        return null;
+    }
+
     return (
         <AnimatePresence>
             {isVisible && (
@@ -47,38 +51,25 @@ const CustomCursor = ({ isHoveringVideo }) => {
                         <div className="w-3 h-3 bg-white rounded-full" />
                     </motion.div>
 
-                    {/* Outer ring / Play button */}
+                    {/* Outer ring - expands on video hover */}
                     <motion.div
                         className="fixed top-0 left-0 pointer-events-none z-[9999]"
                         animate={{
-                            x: mousePosition.x - (isHoveringVideo ? 40 : 20),
-                            y: mousePosition.y - (isHoveringVideo ? 40 : 20),
-                            scale: isHoveringVideo ? 1 : 1,
+                            x: mousePosition.x - (isHoveringVideo ? 35 : 20),
+                            y: mousePosition.y - (isHoveringVideo ? 35 : 20),
                         }}
                         transition={{ type: 'spring', stiffness: 150, damping: 15 }}
                     >
                         <motion.div
-                            className="flex items-center justify-center rounded-full border border-white/30"
+                            className="rounded-full border border-white/30"
                             animate={{
-                                width: isHoveringVideo ? 80 : 40,
-                                height: isHoveringVideo ? 80 : 40,
-                                backgroundColor: isHoveringVideo ? 'rgba(168, 85, 247, 0.9)' : 'transparent',
+                                width: isHoveringVideo ? 70 : 40,
+                                height: isHoveringVideo ? 70 : 40,
+                                borderColor: isHoveringVideo ? 'rgba(168, 85, 247, 0.6)' : 'rgba(255, 255, 255, 0.3)',
+                                borderWidth: isHoveringVideo ? 2 : 1,
                             }}
                             transition={{ duration: 0.3 }}
-                        >
-                            <AnimatePresence>
-                                {isHoveringVideo && (
-                                    <motion.div
-                                        initial={{ opacity: 0, scale: 0 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 0 }}
-                                        transition={{ duration: 0.2 }}
-                                    >
-                                        <Play className="w-6 h-6 text-white fill-white" />
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </motion.div>
+                        />
                     </motion.div>
                 </>
             )}
