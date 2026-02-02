@@ -130,7 +130,7 @@ const Contact = () => {
                 >
                     {/* Animated Profile Image */}
                     <AnimatedProfile
-                        imageSrc="/profile.jpeg"
+                        imageSrc={`${import.meta.env.BASE_URL}profile.jpeg`}
                     />
 
                     {/* Creator Info */}

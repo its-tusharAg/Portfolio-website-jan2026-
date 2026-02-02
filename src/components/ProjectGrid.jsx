@@ -96,13 +96,15 @@ const ProjectCard = ({ project, index, onSelect, onHoverStart, onHoverEnd }) => 
                     transition={{ duration: 0.3, ease: 'easeOut' }}
                     style={{
                         position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
                         zIndex: 15,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        pointerEvents: 'none',
                     }}
                 >
                     <motion.div

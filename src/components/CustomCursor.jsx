@@ -29,11 +29,6 @@ const CustomCursor = ({ isHoveringVideo, isModalOpen }) => {
         return null;
     }
 
-    // Hide cursor when modal is open
-    if (isModalOpen) {
-        return null;
-    }
-
     return (
         <AnimatePresence>
             {isVisible && (

@@ -6,7 +6,7 @@ import VideoModal from './components/VideoModal';
 import About from './components/About';
 import Contact from './components/Contact';
 import CustomCursor from './components/CustomCursor';
-import GrainOverlay from './components/GrainOverlay';
+
 
 function App() {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -56,8 +56,7 @@ function App() {
       {/* Custom Cursor */}
       <CustomCursor isHoveringVideo={isHoveringVideo} isModalOpen={isModalOpen} />
 
-      {/* Grain Overlay */}
-      <GrainOverlay />
+
 
       {/* Navigation */}
       <nav style={{
